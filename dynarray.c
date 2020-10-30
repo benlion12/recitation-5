@@ -13,9 +13,9 @@
  * This structure is used to represent a single dynamic array.
  */
 struct dynarray {
-  void** data;
-  int size;
-  int capacity;
+    void **data;
+    int size;
+    int capacity;
 };
 
 #define DYNARRAY_INIT_CAPACITY 4
@@ -24,16 +24,16 @@ struct dynarray {
  * This function allocates and initializes a new, empty dynamic array and
  * returns a pointer to it.
  */
-struct dynarray* dynarray_create() {
-  struct dynarray* da = malloc(sizeof(struct dynarray));
-  assert(da);
+struct dynarray *dynarray_create() {
+    struct dynarray *da = malloc(sizeof(struct dynarray));
+    assert(da);
 
-  da->data = malloc(DYNARRAY_INIT_CAPACITY * sizeof(void*));
-  assert(da->data);
-  da->size = 0;
-  da->capacity = DYNARRAY_INIT_CAPACITY;
+    da->data = malloc(DYNARRAY_INIT_CAPACITY * sizeof(void *));
+    assert(da->data);
+    da->size = 0;
+    da->capacity = DYNARRAY_INIT_CAPACITY;
 
-  return da;
+    return da;
 }
 
 /*
@@ -44,19 +44,19 @@ struct dynarray* dynarray_create() {
  * Params:
  *   da - the dynamic array to be destroyed.  May not be NULL.
  */
-void dynarray_free(struct dynarray* da) {
-  assert(da);
-  free(da->data);
-  free(da);
+void dynarray_free(struct dynarray *da) {
+    assert(da);
+    free(da->data);
+    free(da);
 }
 
 /*
  * This function returns the size of a given dynamic array (i.e. the number of
  * elements stored in it, not the capacity).
  */
-int dynarray_size(struct dynarray* da) {
-  assert(da);
-  return da->size;
+int dynarray_size(struct dynarray *da) {
+    assert(da);
+    return da->size;
 }
 
 
@@ -64,28 +64,28 @@ int dynarray_size(struct dynarray* da) {
  * Auxilliary function to perform a resize on a dynamic array's underlying
  * storage array.
  */
-void _dynarray_resize(struct dynarray* da, int new_capacity) {
-  assert(new_capacity > da->size);
+void _dynarray_resize(struct dynarray *da, int new_capacity) {
+    assert(new_capacity > da->size);
 
-  /*
-   * Allocate space for the new array.
-   */
-  void** new_data = malloc(new_capacity * sizeof(void*));
-  assert(new_data);
+    /*
+     * Allocate space for the new array.
+     */
+    void **new_data = malloc(new_capacity * sizeof(void *));
+    assert(new_data);
 
-  /*
-   * Copy data from the old array to the new one.
-   */
-  for (int i = 0; i < da->size; i++) {
-    new_data[i] = da->data[i];
-  }
+    /*
+     * Copy data from the old array to the new one.
+     */
+    for (int i = 0; i < da->size; i++) {
+        new_data[i] = da->data[i];
+    }
 
-  /*
-   * Put the new array into the dynarray struct.
-   */
-  free(da->data);
-  da->data = new_data;
-  da->capacity = new_capacity;
+    /*
+     * Put the new array into the dynarray struct.
+     */
+    free(da->data);
+    da->data = new_data;
+    da->capacity = new_capacity;
 }
 
 /*
@@ -97,22 +97,22 @@ void _dynarray_resize(struct dynarray* da, int new_capacity) {
  *   val - the value to be inserted.  Note that this parameter has type void*,
  *     which means that a pointer of any type can be passed.
  */
-void dynarray_insert(struct dynarray* da, void* val) {
-  assert(da);
+void dynarray_insert(struct dynarray *da, void *val) {
+    assert(da);
 
-  /*
-   * Make sure we have enough space for the new element.  Resize if needed.
-   * Here, we double the array's capacity each time it needs to be resized.
-   */
-  if (da->size == da->capacity) {
-    _dynarray_resize(da, 2 * da->capacity);
-  }
+    /*
+     * Make sure we have enough space for the new element.  Resize if needed.
+     * Here, we double the array's capacity each time it needs to be resized.
+     */
+    if (da->size == da->capacity) {
+        _dynarray_resize(da, da->capacity += 8);
+    }
 
-  /*
-   * Put the new element at the end of the array.
-   */
-  da->data[da->size] = val;
-  da->size++;
+    /*
+     * Put the new element at the end of the array.
+     */
+    da->data[da->size] = val;
+    da->size++;
 }
 
 /*
@@ -126,19 +126,19 @@ void dynarray_insert(struct dynarray* da, void* val) {
  *     between 0 (inclusive) and n (exclusive), where n is the number of
  *     elements stored in the array.
  */
-void dynarray_remove(struct dynarray* da, int idx) {
-  assert(da);
-  assert(idx < da->size && idx >= 0);
+void dynarray_remove(struct dynarray *da, int idx) {
+    assert(da);
+    assert(idx < da->size && idx >= 0);
 
-  /*
-   * Move all elements behind the one being removed forward one index,
-   * overwriting the element to be removed in the process.
-   */
-  for (int i = idx; i < da->size - 1; i++) {
-    da->data[i] = da->data[i+1];
-  }
+    /*
+     * Move all elements behind the one being removed forward one index,
+     * overwriting the element to be removed in the process.
+     */
+    for (int i = idx; i < da->size - 1; i++) {
+        da->data[i] = da->data[i + 1];
+    }
 
-  da->size--;
+    da->size--;
 }
 
 /*
@@ -150,11 +150,11 @@ void dynarray_remove(struct dynarray* da, int idx) {
  *     of `idx` must be between 0 (inclusive) and n (exclusive), where n is the
  *     number of elements stored in the array.
  */
-void* dynarray_get(struct dynarray* da, int idx) {
-  assert(da);
-  assert(idx < da->size && idx >= 0);
+void *dynarray_get(struct dynarray *da, int idx) {
+    assert(da);
+    assert(idx < da->size && idx >= 0);
 
-  return da->data[idx];
+    return da->data[idx];
 }
 
 /*
@@ -169,9 +169,9 @@ void* dynarray_get(struct dynarray* da, int idx) {
  *   val - the new value to be set.  Note that this parameter has type void*,
  *     which means that a pointer of any type can be passed.
  */
-void dynarray_set(struct dynarray* da, int idx, void* val) {
-  assert(da);
-  assert(idx < da->size && idx >= 0);
+void dynarray_set(struct dynarray *da, int idx, void *val) {
+    assert(da);
+    assert(idx < da->size && idx >= 0);
 
-  da->data[idx] = val;
+    da->data[idx] = val;
 }

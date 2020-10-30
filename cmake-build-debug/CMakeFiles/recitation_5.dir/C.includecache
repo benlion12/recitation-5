@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/rudyp/AssignmentBranches/cs261/Recitations/recitation-5/dynarray.c
+stdlib.h
+-
+assert.h
+-
+dynarray.h
+C:/Users/rudyp/AssignmentBranches/cs261/Recitations/recitation-5/dynarray.h
+
+C:/Users/rudyp/AssignmentBranches/cs261/Recitations/recitation-5/dynarray.h
+
+C:/Users/rudyp/AssignmentBranches/cs261/Recitations/recitation-5/time_dynarray_insert.c
+stdio.h
+-
+stdlib.h
+-
+assert.h
+-
+time.h
+-
+dynarray.h
+C:/Users/rudyp/AssignmentBranches/cs261/Recitations/recitation-5/dynarray.h
+
